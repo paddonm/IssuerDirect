@@ -1,0 +1,95 @@
+#meetings .create-meeting-button,
+#meetings .start-meeting-button {
+  padding: 5px 20px;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  margin: 0 15px 0 0;
+}
+
+#meetings .create-meeting-button {
+  background-color: #be5928;
+}
+
+#meetings .start-meeting-button {
+  background-color: var(--onschedBlue);
+}
+
+#meetings .meetings-requests-no-requests {
+  text-align: center;
+}
+
+#meetings .meetings-requests-list {
+  border-collapse: separate;
+  width: 100%;
+  text-align: left;
+  border-spacing: 0 20px;
+}
+
+#meetings .meetings-requests-list a {
+  text-decoration: none;
+}
+
+#meetings .meetings-requests-list i {
+  margin: 10px 5px 0px;
+  cursor: pointer;
+}
+
+#meetings .meetings-requests-list img {
+  width: 30px;
+  border-radius: 50%;
+  height: 30px;
+  margin: 10px 15px 0px;
+}
+
+#meetings .meetings-requests-list tr:not(:first-of-type) {
+  line-height: 30px;
+}
+
+#meetings .meetings-requests-list tr:not(:first-of-type) td:first-of-type {
+  border-radius: 8px 0 0 8px;
+}
+
+#meetings .meetings-requests-list tr th {
+  color: #636363;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+#meetings .meetings-requests-list tr:not(:first-of-type) td:first-child {
+  border-left: 1px solid #e6e6e6;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  padding-left: 20px;
+  color: #8c8c8c;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+#meetings .meetings-requests-list tr:not(:first-of-type) td:nth-child(3) {
+  min-width: 15vw;
+}
+
+#meetings .meetings-requests-list tr:not(:first-of-type) td h5 {
+  display: inline-block;
+  margin: 0;
+  position: relative;
+  top: -10px;
+}
+
+#meetings .meetings-requests-list tr:not(:first-of-type) td {
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+  min-height: 55px;
+}
+
+#meetings .meetings-requests-list tr:not(:first-of-type) td:last-child {
+  width: 100%;
+  display: flex;
+  border-right: 1px solid #e6e6e6;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding-right: 20px;
+  font-weight: 500;
+}

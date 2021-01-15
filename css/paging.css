@@ -1,0 +1,19 @@
+.pagination-list .pagination-item {
+  margin: 0 15px;
+}
+
+.pagination-list .pagination-item.selected {
+  background-color: var(--onschedBlue);
+  color: #fff;
+}
+
+.pagination-list .pagination-item {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 1.1rem;
+  color: gray;
+  font-weight: 600;
+}

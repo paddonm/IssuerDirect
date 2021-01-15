@@ -1,0 +1,279 @@
+input[type="date"] {
+  background:#fff url(https://onsched.com/assets/img/calendar_3.png)  97% 50% no-repeat ;
+}
+
+input[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+
+#dashboard .calendar-widget-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#dashboard .calendar-charts-wrapper .calendar-doughnut-widget,
+#dashboard .calendar-charts-wrapper .calendar-barchart-widget
+ {
+  margin: 0 10px;
+}
+
+#dashboard .calendar-charts-wrapper {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: flex-end;
+  
+}
+
+#dashboard .calendar-wrapper, 
+#dashboard .calendar-charts-widget,
+#dashboard .calendar-contacts-widget {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 2px 7px rgb(206 206 206);
+  padding: 15px 30px;
+  margin: 0 auto 30px;
+  width: calc(100% - 60px);
+}
+
+#dashboard .calendar-contacts-widget {
+  max-width: 120px;
+  margin: 0 0 30px 25px;
+  min-height: 95px;
+  text-align: center;
+  font-weight: 600;
+}
+
+#dashboard .calendar-contacts-widget .contactsNum {
+  color: #be5928;
+  display: block;
+}
+
+#dashboard .calendar-charts-widget {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#dashboard .calendar-charts-widget h4 {
+  max-width: 170px;
+  font-size: 1.2rem;
+}
+
+#dashboard .calendar-widget-wrapper .calendar-doughnut-chart {
+  border: 10px solid var(--onschedLightBlue);
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+}
+
+#dashboard .calendar-widget-wrapper .calendar-doughnut-widget {
+  border-radius: 8px;
+  background-color: #eee;
+  padding: 15px 25px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#dashboard .calendar-widget-wrapper .calendar-doughnut-labels div::before {
+  content: ' ';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: var(--onschedLightBlue);
+  border-radius: 50%;
+  border: none;
+  margin-left: -15px;
+}
+
+#dashboard .calendar-widget-wrapper .calendar-doughnut-labels div:not(:first-child)::before {
+  background-color: var(--onschedBlue);
+}
+
+#dashboard .calendar-widget-wrapper .calendar-doughnut-labels div {
+  display: flex;
+  align-items: center;
+}
+
+#dashboard .calendar-widget-wrapper .calendar-doughnut-labels {
+  margin-left: 15px;
+  padding-left: 15px;
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+#dashboard .calendar-widget-wrapper .calendar-barchart-widget {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 120px;
+  background-color: #eee;
+  border-radius: 8px;
+  padding: 15px 25px 10px;
+  height: 70px;
+}
+
+#dashboard .calendar-widget-wrapper .calendar-barchart-widget-day {
+  width: 10px;
+  border-radius: 10px;
+}
+
+#dashboard .calendar-widget-wrapper .calendar-barchart-widget h5 {
+  margin: 5px 0 0;
+  font-weight: 600;
+}
+
+#dashboard .calendar-wrapper .calendar-nav ,
+#dashboard .calendar-wrapper .calendar-nav .onsched-calendar-controls {
+  display: flex;
+  align-items: center;
+}
+
+#dashboard .calendar-wrapper .calendar-nav { justify-content: space-between; }
+
+#dashboard .calendar-wrapper .calendar-nav .onsched-calendar-controls { justify-content: start; }
+
+#dashboard .calendar-wrapper .calendar-nav input {
+  border: none;
+  width: 46px;
+  overflow: hidden;
+  color: var(--onschedLightBlue);
+  cursor: pointer;
+}
+
+#dashboard .calendar-wrapper .calendar-nav i {
+  cursor: pointer;
+  margin: 0 0px 0 25px;
+  color: var(--onschedLightBlue);
+}
+
+#dashboard .calendar-wrapper .calendar-nav .onsched-calendar-dwm-switch {
+  list-style-type: none;
+  padding-left: 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 150px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--onschedBlue);
+}
+
+#dashboard .calendar-wrapper .calendar-nav .onsched-calendar-dwm-switch li {
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+#dashboard .calendar-wrapper .calendar-nav .onsched-calendar-dwm-switch li.active {
+  border-bottom-color: var(--onschedBlue);
+}
+
+#dashboard h2 {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+#dashboard table {
+  border-collapse: collapse;
+  display: inline-block;
+  overflow: scroll;
+  scroll-behavior: smooth;
+  width: 100%;
+  background-color: #fff;
+}
+
+#dashboard table th {
+  line-height: 40px;
+  padding-right: 25px;
+  text-align: left;
+  font-weight: 600;
+}
+
+#dashboard table td {
+  min-width: 150px;
+  max-width: 150px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #8c8c8c;
+  overflow: visible;
+  border-left: 2px solid rgb(218 218 218 / 47%);
+}
+
+#dashboard table td.current {
+  border-left: 2px dashed var(--onschedLightBlue);
+  opacity: .7;
+}
+
+#dashboard table td.closed {
+  background-color: rgb(218 218 218 / 5%);
+}
+
+#dashboard table td .appointment {
+  background-color: var(--onschedBlue);
+  color: #fff;
+  padding: 5px;
+  border-radius: 4px;
+  position: relative;
+  cursor: default;
+}
+
+#dashboard table td .appointment .tooltip {
+  display: none;
+}
+
+#dashboard table td .appointment:hover .tooltip {
+  position: absolute;
+  display: block !important;
+  opacity: 0.6;
+  background-color: rgb(0 0 0);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  left: 76px;
+  min-width: 125px;
+  top: 10px;
+  max-width: 590px;
+  width: 100%;
+  word-break: break-word;
+  z-index: 999999999999;
+}
+
+#dashboard table td .appointment h5 {
+  margin: 0;
+  font-weight: 500;
+  font-size: .9rem;
+  white-space: nowrap;
+}
+
+#dashboard .onsched-day-col {
+  position: absolute;
+  background: #fff;
+  margin-top: 0px;
+  padding: 0 20px 18px 0;
+  font-size: 12px;
+  color: #8c8c8c;
+  z-index: 99999;
+}
+
+#dashboard .onsched-day-col div {
+  line-height: 42px;
+  font-weight: 600;
+}
+
+#appointments {
+  display: none;
+}
+
+#dashboard .monthTitles td {
+  border-color: transparent;
+  text-align: center;
+}

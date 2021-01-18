@@ -1,4 +1,6 @@
 var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', ' '];
+const serviceColors = ['#145489','#be5928','rgb(111 178 237)','rgb(48 56 60)']
+const distinct = (value, i, self) => self.indexOf(value) === i;
 var elCalendar = document.createElement('DIV');
 
 const mountDashboardComponent = () => {
@@ -11,7 +13,7 @@ const mountDashboardComponent = () => {
   elAppDiv.appendChild(elAppointments);
 
   checkBusinessHours({locationId: '4d28c64a-2d07-4de0-b8f5-730338ed309c'}).then(() => {
-    mountAppointments(mountCalendarTable, {}, { formValues: [{paramName: 'startDate', value: getStartOfWeek(moment())}, { paramName: 'endDate', value: getEndOfWeek(moment())}] });
+    mountAppointments(mountCalendar, {}, { formValues: [{paramName: 'startDate', value: getStartOfMonth(moment())}, { paramName: 'endDate', value: getEndOfMonth(moment())}] });
   })
 }
 
@@ -122,13 +124,6 @@ const mountCalendarTable = () => {
 
   let dayOfWeek = moment(appState.date).format('ddd');
 
-  const serviceColors = [
-    '#145489',
-    '#be5928',
-    'rgb(111 178 237)',
-    'rgb(48 56 60)',
-  ]
-
   const calendarTableRow = day => {
     var elRow = document.createElement('TR');
 
@@ -159,7 +154,6 @@ const mountCalendarTable = () => {
         elHourColumn.innerText = hour.displayTime;
       }
 
-      const distinct = (value, i, self) => self.indexOf(value) === i;
       const services = appState.appointments.map(a => a.serviceId).filter(distinct);
 
       appState.appointments.map(appt => {
@@ -210,8 +204,8 @@ const mountCalendarTable = () => {
         checkBusinessHours({locationId: '4d28c64a-2d07-4de0-b8f5-730338ed309c'})
       }
       
-      let currentWeek = moment().startOf('week').format('YYYY-MM-DD') === moment(appState.date).startOf('week').format('YYYY-MM-DD');
-      
+      let currentWeek = moment().startOf('week').format('YYYY-MM-DD') === moment(new Date(appState.date)).startOf('week').format('YYYY-MM-DD');
+
       if (currentWeek) {
         if (dayOfWeek === day) {
           elRow.setAttribute('style', 'background-image: linear-gradient(to right, #cccccc 33%, rgba(255,255,255,0) 0%); background-position: top; background-size: 20px 1px; background-repeat: repeat-x;');
@@ -239,49 +233,85 @@ const mountCalendarTable = () => {
     elCalendarBody.appendChild(elRow);
   }
 
-  const monthCalendar = (weeks, startDay, daysInMonth) => {
-    var hours = []
-    var dates = [] 
-
-    for (var i = 0; i < 24; i++) {
-      var displayTime
-
-      if (i === 0) displayTime = '12 am';
-      else if (i <= 12) displayTime = `${i} ${i < 12 ? 'am' : 'pm'}`;
-      else if (i === 24) displayTime = '12';
-      else displayTime = `${i - 12} ${i < 12 ? 'am' : 'pm'}`;
-
-      hours.push({ meridiem: i <= 12 ? 'am' : 'pm', time: i, displayTime });
+  const monthCalendar = () => {
+    var elCalendar = document.createElement('DIV');
+  
+    var elCalendarTable = document.createElement('TABLE');
+    elCalendarTable.className = 'calendar-table';
+    var elCalendarTableBody = document.createElement('TBODY');
+    elCalendarTable.appendChild(elCalendarTableBody);
+  
+    elTableHeaders = document.createElement('TR');
+    var headerDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    headerDays.map(headerDay => {
+      var elDay = document.createElement('TD');
+      elDay.className = 'month-day-headers';
+      elDay.innerText = headerDay;
+      elTableHeaders.appendChild(elDay);
+    })
+  
+    elCalendarTableBody.appendChild(elTableHeaders);
+  
+    const startWeek = moment().startOf('month').week();
+    const endWeek = moment().endOf('month').week();
+  
+    let calendar = []
+    for(var week = startWeek; week<endWeek;week++){
+      calendar.push({
+        week:week,
+        days:Array(7).fill(0).map((n, i) => moment().week(week).startOf('week').clone().add(n + i, 'day'))
+      })
     }
 
-    for (i=0;i <= weeks + 1;i++) {
-      var elRow = document.createElement('TR');
-      console.log(weeks, startDay, daysInMonth, i)
-      
-      if (i === weeks + 1) {
-        hours.map(hour => {
-          var monthDay = document.createElement('TD');
-          monthDay.innerText = hour.displayTime;
-          elRow.appendChild(monthDay);
-        })
-      }
-      else {
-        if (i === 0) {
-          elRow.className = 'monthTitles';
-        }
-        for (date=1;date <= daysInMonth; date++) {
-          var monthDay = document.createElement('TD');
-          monthDay.innerText = date*(i);
-          if (i === 0) {
-            monthDay.innerText = days[date];
+    calendar.map(calWeek => {
+      var elCalRow = document.createElement('TR');
+      calWeek.days.map((calDay, i) => {
+        if (i !== 0 && i !== (calWeek.days.length - 1)) {
+          var elCalDay = document.createElement('TD');
+          elCalDay.innerText = calDay.format('D');
+  
+          if (calDay.format('YYYY-MM-DD') === moment(appState.date).format('YYYY-MM-DD')) {
+            elCalDay.className = 'today';
           }
-          // if (i > 0 && Math.ceil(date/7) === i) {
-          // }
-          elRow.appendChild(monthDay);
+          
+          var daysAppts = appState.appointments.filter(appt => appt.dateInternational === calDay.format('YYYY-MM-DD'))
+          daysAppts.map(dayAppt => {
+            const services = appState.appointments.map(a => a.serviceId).filter(distinct);
+            let bgColor = serviceColors[services.indexOf(dayAppt.serviceId)];
+            var elDayAppt = document.createElement('DIV');
+            elDayAppt.setAttribute('style', `background-color: ${bgColor}; width: ${dayAppt.duration / 60 * 50 - 10}px; float: right`);
+            elDayAppt.className = 'appt';
+            elCalDay.appendChild(elDayAppt);
+          })
+  
+          elCalRow.appendChild(elCalDay);
         }
-      }
-      elCalendarBody.appendChild(elRow);
+      })
+      
+      elCalendarTableBody.appendChild(elCalRow);
+    })
+    
+    var elTimeRow = document.createElement('TR');
+    
+    for (var idx=0;idx < 5;idx++) {
+      elTimeDay = document.createElement('TD');
+      elTimesWrap = document.createElement('DIV');
+      elTimesWrap.className = 'month-times-wrap';
+      ['8am', '12pm', '5pm'].map(time => {
+        var elTime = document.createElement('DIV');
+        elTime.innerText = time;
+        elTimesWrap.appendChild(elTime);
+      })
+      
+      elTimeDay.appendChild(elTimesWrap);
+      elTimeRow.appendChild(elTimeDay);
     }
+
+    elCalendarTableBody.appendChild(elTimeRow);
+  
+    elCalendar.appendChild(elCalendarTable);
+
+    elCalendarBody.appendChild(elCalendar)
   }
 
   var elDayHeaders = document.createElement('DIV');
@@ -301,13 +331,7 @@ const mountCalendarTable = () => {
       break;
       
     case 'M': 
-      let firstDay = moment(getStartOfMonth(appState.date)).format('ddd')
-      let start = moment(getStartOfMonth(appState.date)).format('DD')
-      let end = moment(getEndOfMonth(appState.date)).format('DD')
-      var weeks = (end-start+1)/7;
-      weeks = Math.ceil(weeks);
-      
-      monthCalendar(weeks, firstDay, moment(appState.date).daysInMonth());
+      monthCalendar();
       break;
 
     default: 
@@ -332,6 +356,9 @@ const mountCalendarTable = () => {
 const mountCalendar = () => {
   var elDashboardDiv = document.getElementById('dashboard');
 
+  var elCalendarTagWrapper = document.createElement('DIV');
+  elCalendarTagWrapper.className = 'calendar-tag-wrapper';
+  
   var elCalendarWrapper = document.createElement('DIV');
   elCalendarWrapper.className = 'calendar-wrapper';
   elCalendarWrapper.id = 'calendarWrapper';
@@ -342,8 +369,8 @@ const mountCalendar = () => {
   const getAppointmentsParams = date => {
     return {
       formValues: [
-        { paramName: 'startDate', value: getStartOfWeek(date) },
-        { paramName: 'endDate', value: getEndOfWeek(date) }
+        { paramName: 'startDate', value: getStartOfMonth(date) },
+        { paramName: 'endDate', value: getEndOfMonth(date) }
       ]
     }
   }
@@ -448,12 +475,25 @@ const mountCalendar = () => {
   elCalendarControls.appendChild(elCalendarNavRight);
   elCalendarNav.appendChild(elCalendarControls);
   elCalendarNav.appendChild(elDWMSwitch);
+
+  var elBookBtn = document.createElement('DIV');
+  elBookLink = document.createElement('A');
+  elBookLink.innerText = 'Book Meeting';
+  elBookLink.href = location.origin + location.pathname + '#/' + 'bookmeeting'
+  elBookLink.onclick = () => createTemplateView('bookmeeting', 'bookmeeting', mountBookingCalendar);
+  elBookIcon = document.createElement('I');
+  elBookIcon.className = 'far fa-calendar-alt fa-2x';
+  elBookBtn.className = "book-btn";
+  elBookBtn.appendChild(elBookLink);
+  elBookBtn.appendChild(elBookIcon);
   
   elCalendarWrapper.appendChild(elCalendarNav);
   elCalendarWrapper.appendChild(mountCalendarTable('W'));
 
   clearElement(elDashboardDiv);
-  elDashboardDiv.appendChild(elCalendarWrapper);
+  elCalendarTagWrapper.appendChild(elBookBtn);
+  elCalendarTagWrapper.appendChild(elCalendarWrapper);
+  elDashboardDiv.appendChild(elCalendarTagWrapper);
 
   var issuerDirectLogo = document.createElement('IMG');
   issuerDirectLogo.src = 'https://onsched.com/assets/img/logos/issuerdirect.png';

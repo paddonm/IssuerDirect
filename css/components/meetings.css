@@ -1,14 +1,21 @@
 #meetings .create-meeting-button,
-#meetings .start-meeting-button {
+#meetings .start-meeting-button,
+#contacts .create-contact-button {
   padding: 5px 20px;
   font-weight: 600;
   color: #fff;
   border-radius: 50px;
   font-size: 1.2rem;
   margin: 0 15px 0 0;
+  cursor: pointer;
+  width: 100%;
+  height: 30px;
+  max-width: 165px;
 }
 
-#meetings .create-meeting-button {
+#meetings .create-meeting-button,
+#contacts .create-contact-button
+{
   background-color: #be5928;
 }
 

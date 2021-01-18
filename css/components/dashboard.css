@@ -28,7 +28,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   max-width: 500px;
   display: flex;
   justify-content: flex-end;
-  
+}
+
+#dashboard .calendar-wrapper {
+  margin-top: -44px !important;
 }
 
 #dashboard .calendar-wrapper, 
@@ -38,8 +41,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 12px;
   box-shadow: 0px 2px 7px rgb(206 206 206);
   padding: 15px 30px;
-  margin: 0 auto 30px;
-  width: calc(100% - 60px);
+  margin: 0 auto 30px 0;
+  width: calc(100% - 120px);
+  position: relative;
+  z-index: 2;
 }
 
 #dashboard .calendar-contacts-widget {
@@ -177,6 +182,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-bottom-color: var(--onschedBlue);
 }
 
+#dashboard .calendar-wrapper div:not(.calendar-nav) {
+  overflow: scroll;
+}
+
 #dashboard h2 {
   font-weight: 500;
   font-size: 1.2rem;
@@ -184,11 +193,24 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 #dashboard table {
   border-collapse: collapse;
-  display: inline-block;
   overflow: scroll;
   scroll-behavior: smooth;
   width: 100%;
   background-color: #fff;
+}
+
+#dashboard table.calendar-table tr {
+  line-height: 40px;
+}
+
+#dashboard table.calendar-table .today {
+  border: 2px dashed var(--onschedLightBlue);
+}
+
+#dashboard table.calendar-table .appt {
+  height: 40px;
+  border-radius: 4px;
+  margin: 0 2px;
 }
 
 #dashboard table th {
@@ -198,6 +220,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-weight: 600;
 }
 
+#dashboard table.calendar-table td {
+  min-width: 60px !important;
+  padding: 0 15px;
+}
+
+#dashboard table td.month-day-headers {
+  border: none;
+  text-align: center;
+}
+
+#dashboard table td:not(:first-of-type):not(.month-day-headers):not(.current) {
+  border-left: 2px solid rgb(218 218 218 / 47%);
+}
+
+#dashboard table td .month-times-wrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
 #dashboard table td {
   min-width: 150px;
   max-width: 150px;
@@ -205,7 +247,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-weight: 600;
   color: #8c8c8c;
   overflow: visible;
-  border-left: 2px solid rgb(218 218 218 / 47%);
 }
 
 #dashboard table td.current {
@@ -276,4 +317,34 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 #dashboard .monthTitles td {
   border-color: transparent;
   text-align: center;
+}
+
+#dashboard .book-btn a {
+  margin-right: 15px;
+}
+
+#dashboard .book-btn {
+  background: #be5928;
+  color: #fff;
+  width: calc(100% - 25px);
+  position: relative;
+  padding: 5px;
+  border-radius: 14px 8px 8px 0;
+  font-weight: 600;
+  text-align: right;
+}
+
+#dashboard .book-btn:hover {
+  width: calc(100% + 100px);
+  cursor: pointer;
+}
+
+#dashboard .book-btn:hover a {
+  display: unset !important;
+}
+
+#dashboard .book-btn a {
+  color: #fff;
+  text-decoration: none;
+  display: none;
 }

@@ -1,0 +1,210 @@
+#bookmeeting {
+  background-color: #fff;
+  border: 1px solid lightgray;
+  border-radius: 14px;
+  box-shadow: 0px 4px 4px lightgrey;
+  padding: 15px 30px;
+}
+
+#bookmeeting .booking-search-title {
+  display: flex;
+  align-items: center;
+}
+
+#bookmeeting .booking-search h5,
+#bookmeeting .title-description h5
+{
+  margin: 15px 10px 15px 0;
+}
+
+#bookmeeting .booking-search:not(h5) {
+  font-size: .9rem;
+}
+
+#bookmeeting .search-wrapper {
+  display: flex;
+}
+
+#bookmeeting .search-wrapper input {
+  width: 100% !important;
+  height: 20px;
+  border: 1px solid lightgray !important;
+  border-right: none !important;
+  border-radius: 15px 0 0 15px;
+  border: none;
+  width: 40px;
+}
+
+#bookmeeting .search-wrapper .search-recipient-btn {
+  background-color: #be5928;
+  border: 1px solid lightgray;
+  border-radius: 0px 15px 15px 0;
+  border-left: none;
+  width: 60px;
+  color: #fff;
+}
+
+#bookmeeting .search-wrapper .view-contacts-btn {
+  width: 150px;
+  margin: 0 10px;
+  background-color: var(--onschedBlue);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 15px;
+}
+
+#bookmeeting .title-description p {
+  font-size: .9rem;
+}
+
+#bookmeeting .calendar-wrapper h5 {
+  display: inline-block;
+}
+
+#bookmeeting .calendar-wrapper input {
+  border: none;
+  width: 30px;
+}
+
+#bookmeeting .calendar-wrapper table {
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+}
+
+#bookmeeting .calendar-wrapper table td {
+  line-height: 50px;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#bookmeeting .calendar-wrapper table td:hover {
+  background-color: #eee;
+}
+
+#bookmeeting .calendar-wrapper table td.selected {
+  background-color: #eee;
+}
+
+#bookmeeting .calendar-wrapper table td.out-of-month,
+#bookmeeting .calendar-wrapper table td.past
+{
+  color: lightgray;
+  cursor: default;
+}
+
+#bookmeeting .calendar-wrapper .calendar-table-headers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 65px;
+  font-weight: 500;
+}
+
+#bookmeeting .select-time {
+  margin: 25px 0 50px;
+}
+
+#bookmeeting .select-time span {
+  font-size: .9rem;
+  color: gray;
+  font-style: italic;
+}
+
+#bookmeeting .select-time h5 {
+  margin: 15px 0;
+}
+
+#bookmeeting .select-time ul
+ {
+  padding-left: 0;
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+}
+
+#bookmeeting .select-time li {
+  padding: 5px 15px;
+  border: 1px solid lightgray;
+  font-size: .8rem;
+  font-weight: 600;
+  max-height: 20px;
+}
+
+#bookmeeting .select-time li.selected {
+  background-color: var(--onschedBlue);
+  color: #fff;
+}
+
+#bookmeeting .select-time li:hover {
+  background-color: var(--onschedBlue);
+  color: #fff;
+  cursor: pointer;
+}
+
+#bookmeeting .select-time li:first-of-type {
+  border-radius: 15px 0 0 15px;
+}
+
+#bookmeeting .select-time li:last-of-type {
+  border-radius: 0 15px 15px 0;
+}
+
+#bookmeeting .comments {
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  width: 100%;
+  margin: 0 auto 25px auto;
+}
+
+#bookmeeting .send-buttons {
+  padding-left: 0;
+  list-style-type: none;
+  display: flex;
+}
+
+#bookmeeting .send-buttons li:hover {
+  cursor: pointer;
+  color: gray;
+}
+
+#bookmeeting .send-buttons li:last-of-type:hover {
+  background-color: gray !important;
+  color: lightgray !important;
+}
+
+#bookmeeting .send-buttons li {
+  padding: 5px 25px;
+  font-size: .9rem;
+  font-weight: 600;
+  border: 1px solid lightgray;
+  color: lightgray;
+  margin-right: 5px;
+  border-radius: 15px;
+}
+
+#bookmeeting .send-buttons li:last-of-type {
+  background-color: lightgray;
+  color: gray;
+}
+
+#bookmeeting .time-selector {
+  display: flex;
+  justify-content: space-between;
+}
+
+#bookmeeting #time-frames {
+  margin-left: 50px;
+  flex-wrap: wrap !important;
+}
+
+#bookmeeting #time-frames li {
+  padding: 5px 15px;
+  border: 1px solid lightgray;
+  font-size: unset;
+  font-weight: 600;
+  border-radius: 15px !important;
+  margin: 5px;
+}

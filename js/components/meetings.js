@@ -56,6 +56,10 @@ const mountMeetings = () => {
   var elCreateMeeting = document.createElement('A');
   elCreateMeeting.className = 'create-meeting-button';
   elCreateMeeting.innerHTML = "<i class='fal fa-calendar-alt'></i> Create Meeting"
+  elCreateMeeting.onclick = () => {
+    createTemplateView('bookmeeting', 'bookmeeting', mountBookingCalendar);
+    window.location.assign(location.origin + location.pathname + '#/bookmeeting');
+  }
   
   var elStartMeeting = document.createElement('A');
   elStartMeeting.className = 'start-meeting-button';

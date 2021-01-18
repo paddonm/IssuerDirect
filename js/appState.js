@@ -7,5 +7,7 @@ var appState = {
   page: 1,
   businessHours: {},
   calendarType: 'W',
-  locationId: ''
+  locationId: '',
+  customers: [],
+  customersTotal: 0
 }

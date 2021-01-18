@@ -3,7 +3,8 @@ const elHeader = document.getElementById('header');
 const navItems = [
   { label: 'Welcome back', button: 'Home', icon: 'fal fa-home', path: '', component: mountDashboardComponent },
   { label: 'Meetings', button: 'Meetings', icon: 'fal fa-users', path: 'meetings', component: mountMeetingAppointments },
-  { label: 'Contacts', button: 'Contacts', icon: 'fal fa-address-card', path: 'contacts', component: mountContacts }
+  { label: 'Contacts', button: 'Contacts', icon: 'fal fa-address-card', path: 'contacts', component: mountContacts },
+  { label: 'Create Meeting', button: '', icon: 'fal fa-address-card', path: 'bookmeeting', component: mountBookingCalendar }
 ]
 
 var selectedNavItem = navItems[0].label;
@@ -15,24 +16,8 @@ const updateNavItem = item => {
 const mountHeader = () => {
   clearElement(elHeader);
   var elTitle = document.createElement('H1');
+  elTitle.innerText = selectedNavItem;
 
-  switch (selectedNavItem) {
-    case navItems[0].label:
-        elTitle.innerText = 'Welcome Back'
-      break;
-  
-    case navItems[1].label:
-      elTitle.innerText = 'Meetings'
-      break;
-      
-    case navItems[2].label:
-      elTitle.innerText = 'Contacts'
-      break;
-  
-    default:
-      break;
-  }
-  
   elHeader.appendChild(elTitle)
 
   var headerItems = document.createElement('UL');
@@ -47,7 +32,6 @@ const mountHeader = () => {
 
     var headerItemIcon = document.createElement('I');
     headerItemLink.onclick = () => {
-      console.log('itemLink', item)
       createTemplateView(item.path, item.path, item.component);
     }
 
@@ -56,14 +40,16 @@ const mountHeader = () => {
 
     headerItemLink.innerHTML = headerItemLink.innerHTML + ' ' + item.button;
     headerItem.appendChild(headerItemLink);
-    
-    if (selectedNavItem === navItems[0].label) {
-      if (navItems[0].label !== item.label) {
+
+    if (item.button.length) {
+      if (selectedNavItem === navItems[0].label) {
+        if (navItems[0].label !== item.label) {
+          headerItems.appendChild(headerItem);
+        }
+      }
+      else {
         headerItems.appendChild(headerItem);
       }
-    }
-    else {
-      headerItems.appendChild(headerItem);
     }
   })
 

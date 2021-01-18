@@ -65,36 +65,30 @@ const mountAppointments = (mountComponent, options, params, meetingHistory) => {
     });
     
     appointments.mount('appointments');
+    setLoading(true);
   })
 }
 
 // CustomersElement
-const mountCustomers = (mountComponent, options, params) => {
-  var elAppDiv = document.getElementById('app');
-  checkElements('#customers').then(resp => {
-    console.log(resp[0])
-    const elCustomers = resp[0];
-    const getFromDate = date => moment(date).startOf('month').format('YYYY-MM-DD');
-    const getToDate = date => moment(date).endOf('month').format('YYYY-MM-DD');
+const mountCustomers = (mountComponent, options = {}, params = {}) => {
+  checkElements('#customer').then(resp => {
+    const elCustomer = resp[0];
     
-    var customersOptions = {};
+    var customerOptions = {};
     if (options)
-      customersOptions = options;
+      customerOptions = options;
     
-    var customersParams = {};
+    var customerParams = {};
     
     if (params)
-      customersParams = params;
+      customerParams = params;
     
-    var customers = elements.create("customers", customersParams, customersOptions);
+    var customer = elements.create("customer", customerParams, customerOptions);
     
-    checkBusinessHours({locationId: appState.locationIdl}).then(() => {
-      resp => console.log(resp)
-    })
-    elCustomers.addEventListener("getCustomers", function (e) {
+    elCustomer.addEventListener("getCustomers", function (e) {
+        updateCustomers(e.detail).then(() => mountComponent());
     });
-    
-    customers.mount('customers');
+    customer.mount('customer');
   })
 }
 
@@ -106,7 +100,7 @@ const checkBusinessHours = (locationParams = {}, locationOptions = {}) => {
     
     document.getElementById('app').appendChild(elLocation);
   }
-
+  
   return new Promise(resolve => {
     checkElements('#location').then(resp => {
       var elLocation = resp[0];

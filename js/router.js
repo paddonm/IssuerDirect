@@ -4,6 +4,7 @@ const pages = {
   createMeeting: 'meetings/create',
   declineMeeting: 'meetings/decline',
   contacts: 'contacts',
+  bookmeeting: 'bookmeeting',
 }
 
 // Application div
@@ -51,7 +52,7 @@ template('template1', () => {
   })
   .then(() => {
     checkBusinessHours({locationId: '4d28c64a-2d07-4de0-b8f5-730338ed309c'}).then(() => {
-      mountAppointments(mountCalendar, {}, { formValues: [{paramName: 'startDate', value: getStartOfWeek(moment())}, { paramName: 'endDate', value: getEndOfWeek(moment())}] });
+      mountAppointments(mountCalendar, {}, { formValues: [{paramName: 'startDate', value: getStartOfMonth(moment())}, { paramName: 'endDate', value: getEndOfMonth(moment())}] });
     })
   });
 });
@@ -139,6 +140,9 @@ function detectRoute() {
       createTemplateView('contacts', 'contacts', mountContacts);
       break;
       
+    case pages.bookmeeting:
+      createTemplateView('bookmeeting', 'bookmeeting', mountBookingCalendar);
+      break;
     
     default:
       break;

@@ -61,6 +61,14 @@ const updateMeetings = appointments => {
   })
 }
 
+const updateCustomers = customers => {
+  appState.customers = customers.data;
+  appState.customersTotal = customers.total;
+  return new Promise(resolve => {
+    resolve(appState)
+  })
+}
+
 const setLoading = status => {
   var elAppDiv = document.getElementById('app');
   
@@ -68,7 +76,7 @@ const setLoading = status => {
   elLoader.id = 'loader-img';
   elLoader.src = 'https://onsched.com/assets/img/logos/issuerdirectlogo2.gif';
   
-  if (status) {
+  if (status && !document.getElementById('loader-img')) {
     elAppDiv.appendChild(elLoader);
     elAppDiv.className = 'loading';
   }

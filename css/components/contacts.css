@@ -1,0 +1,39 @@
+#contacts .search-contacts-input {
+  border: 1px solid lightgray;
+  border-radius: 15px;
+  padding: 5px 20px;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+#contacts .contacts-actions {
+  display: flex;
+  margin-bottom: 25px;
+}
+
+#contacts .contacts-list {
+  border-collapse: separate;
+  width: 100%;
+  text-align: left;
+  border-spacing: 0 10px;
+}
+
+#contacts .contacts-list th {
+  color: #636363;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+#contacts .contacts-list td {
+  background-color: #fff;
+  padding: 10px;
+  font-weight: 500;
+}
+
+#contacts .contacts-list td:first-of-type {
+  border-radius: 4px 0 0 4px;
+}
+
+#contacts .contacts-list td:last-of-type {
+  border-radius: 0 4px 4px 0;
+}

@@ -9,5 +9,6 @@ var appState = {
   calendarType: 'W',
   locationId: '',
   customers: [],
-  customersTotal: 0
+  customersTotal: 0,
+  contactsSelected: []
 }

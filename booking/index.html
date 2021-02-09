@@ -5,17 +5,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+<style>
+  .logo {
+    width: 100%;
+    max-width: 200px;
+  }
+  .onsched-calendar {
+    display: none;
+  }
+</style>
 <body>
 
-  <header><img src="" alt="Issuer Direct" /></header>
+  <header><img src="https://onsched.com/assets/img/logos/issuerdirect-logo.png" alt="Issuer Direct" class="logo" /></header>
   <div class="issuer-direct-booking">
-
+    <div id="availability"></div>
+    <div id="confirmation"></div>
   </div>
 
 <script
   type="text/javascript"
   src="https://js.onsched.com/0.1.0-beta/"
 ></script>
+
+<script>
+    var clientId = "client1532794271"
+    var locationId = "livedemo"
+    var resourceId = 0
+    var serviceId = 55
+
+    // Test ids (sandbox)
+       // (resourceId: Mitchell James)
+       // (serviceId: Account Setup)
+    //var resourceId = 7351
+    //var serviceId = 616
+
+    var onsched = OnSched(clientId, "live");
+
+    /// Get instance of elements to use for creating elements
+    var elements = onsched.elements();
+
+    // Availability Element
+    var now = new Date();
+    var tzOffset = -now.getTimezoneOffset();
+
+    var availabilityParams = {
+        locationId: 'livedemo', serviceId: serviceId, resourceId: resourceId, tzOffset: tzOffset,
+        appointmentBM: { customFields: {field1: "Company name"}}
+    };
+
+    var availabilityOptions = {};
+    var availability = elements.create("availability", availabilityParams, availabilityOptions);
+    var elAvailability = document.getElementById("availability");
+
+    availability.mount("availability");
+
+    elAvailability.addEventListener("bookingConfirmation", function (e) {
+      elAvailability.innerHTML = "";
+      confirmationParams = { appointment: e.detail };
+      confirmation.update(confirmationParams);
+      confirmation.mount("confirmation");
+    });
+
+    var confirmationParams = {};
+    var confirmationOptions = {};
+    var confirmation = elements.create("confirmation", confirmationParams, confirmationOptions);
+    var elConfirmation = document.getElementById("confirmation");
+</script>
   
 </body>
 </html>

@@ -29,6 +29,7 @@ const mountAppointments = (mountComponent, options, params, meetingHistory) => {
     var appointments = elements.create("appointments", appointmentsParams, appointmentsOptions);
     
     elAppointments.addEventListener("getAppointments", function (e) {
+      setLoading(true);
       if (!document.querySelectorAll('#dashboard').length) {
         new Promise((resolve) => {
           const element = createDiv('dashboard', `<div id="dashboard"></div>`);
@@ -53,11 +54,13 @@ const mountAppointments = (mountComponent, options, params, meetingHistory) => {
       else {
         if (meetingHistory) {
           updateMeetings(e.detail).then(() => {
+            setLoading(false);
             mountComponent();
           })
         }
         else {
           updateAppointments(e.detail).then(() => {
+            setLoading(false);
             mountComponent();
           })
         }
@@ -65,12 +68,12 @@ const mountAppointments = (mountComponent, options, params, meetingHistory) => {
     });
     
     appointments.mount('appointments');
-    setLoading(true);
   })
 }
 
 // CustomersElement
 const mountCustomers = (mountComponent, options = {}, params = {}) => {
+  setLoading(true);
   checkElements('#customer').then(resp => {
     const elCustomer = resp[0];
     
@@ -86,6 +89,7 @@ const mountCustomers = (mountComponent, options = {}, params = {}) => {
     var customer = elements.create("customer", customerParams, customerOptions);
     
     elCustomer.addEventListener("getCustomers", function (e) {
+      setLoading(false);
         updateCustomers(e.detail).then(() => mountComponent());
     });
     customer.mount('customer');

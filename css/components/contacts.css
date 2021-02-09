@@ -1,27 +1,53 @@
 #contacts .search-contacts-input {
   border: 1px solid lightgray;
   border-radius: 15px;
-  padding: 5px 20px;
+  padding: 6px 20px;
   font-size: 0.9rem;
   width: 100%;
 }
 
 #contacts .contacts-actions {
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 25px;
+  justify-content: center;
+  align-items: center;
+}
+
+#contacts .contacts-actions form {
+  width: 100%;
+  display: inline-flex;
+  flex-wrap: wrap;
 }
 
 #contacts .contacts-list {
   border-collapse: separate;
-  width: 100%;
+  width: calc(100% - 20px);
   text-align: left;
   border-spacing: 0 10px;
+  margin: 0 10px;
 }
 
 #contacts .contacts-list th {
   color: #636363;
   font-weight: 600;
   font-size: 15px;
+}
+
+#contacts .contacts-list th:nth-child(3),
+#contacts .contacts-list td:nth-child(3) {
+  display: none;
+}
+
+@media (min-width: 576px) {
+  #contacts .contacts-list th:nth-child(3),
+  #contacts .contacts-list td:nth-child(3) {
+    display: table-cell;
+  }
+
+  #contacts .contacts-actions {
+    flex-wrap: nowrap;
+  }
 }
 
 #contacts .contacts-list td {

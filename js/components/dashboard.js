@@ -37,7 +37,7 @@ const generateWidgets = () => {
   
   var counts = {};
   
-  var appts = appState.appointments.map(a => a.dateInternational);
+  var appts = appState.appointments.map(a => moment(a.date).format('YYYY-MM-DD'));
   
   for (var i = 0; i < appts.length; i++) {
     var num = appts[i];
@@ -100,16 +100,16 @@ const generateWidgets = () => {
     elBarChart.appendChild(elBarWrapper);
   }
   
-  elChartsWrapper.appendChild(elBarChart);
-  elChartsWrapper.appendChild(elDoughnutWidget);
-  elChartsWidget.appendChild(elChartsWrapper);
-  elWidgetWrapper.appendChild(elChartsWidget);
-  
   var elContactsWidget = document.createElement('DIV');
   elContactsWidget.className = 'calendar-contacts-widget';
   elContactsWidget.innerHTML = `You have <span class="contacts-widget-number">13</span> new contacts`;
   
-  elWidgetWrapper.appendChild(elContactsWidget);
+  
+  elChartsWrapper.appendChild(elBarChart);
+  elChartsWrapper.appendChild(elDoughnutWidget);
+  elChartsWrapper.appendChild(elContactsWidget);
+  elChartsWidget.appendChild(elChartsWrapper);
+  elWidgetWrapper.appendChild(elChartsWidget);
 
   return elWidgetWrapper;
 }
@@ -143,6 +143,8 @@ const mountCalendarTable = () => {
 
       hours.push({ meridiem: i <= 12 ? 'am' : 'pm', time: i, displayTime });
     }
+    
+    let currentDate = moment(appState.date).startOf('week').add(days.indexOf(day), 'days').format('YYYY-MM-DD')
 
     hours.map(hour => {
       var elHourColumn = document.createElement('TD');
@@ -155,30 +157,32 @@ const mountCalendarTable = () => {
       }
 
       const services = appState.appointments.map(a => a.serviceId).filter(distinct);
-
+      
       appState.appointments.map(appt => {
         if (parseInt(appt.time / 100) === hour.time) {
           if (new Date(appt.startDateTime).toString().slice(0, 3) === day) {
-            var elAppt = document.createElement('DIV');
-            elAppt.className = 'appointment';
-            var elTooltip = document.createElement('DIV');
-            elTooltip.className = 'tooltip';
-            elTooltip.innerText = appt.duration + ` min ${appt.serviceName} with ` + appt.name;
-            // Style Appointment
-            let bgColor = serviceColors[services.indexOf(appt.serviceId)];
-            if (appt.time % 100 !== 0) {
-              elAppt.setAttribute('style', `background-color: ${bgColor}; width: ${appt.duration / 60 * 150 - 10}px; float: right`);
-            }
-            else {
-              elAppt.setAttribute('style', `background-color: ${bgColor}; width: ${appt.duration / 60 * 150 - 10}px; display: inline-block`);
-            }
+            if (currentDate === moment(appt.date).format('YYYY-MM-DD')) {
+              var elAppt = document.createElement('DIV');
+              elAppt.className = 'appointment';
+              var elTooltip = document.createElement('DIV');
+              elTooltip.className = 'tooltip';
+              elTooltip.innerText = appt.duration + ` min ${appt.serviceName} with ` + appt.name;
+              // Style Appointment
+              let bgColor = serviceColors[services.indexOf(appt.serviceId)];
+              if (appt.time % 100 !== 0) {
+                elAppt.setAttribute('style', `background-color: ${bgColor}; width: ${appt.duration / 60 * 150 - 10}px; float: right`);
+              }
+              else {
+                elAppt.setAttribute('style', `background-color: ${bgColor}; width: ${appt.duration / 60 * 150 - 10}px; display: inline-block`);
+              }
 
-            var elName = document.createElement('H5');
-            elName.innerText = appt.name;
+              var elName = document.createElement('H5');
+              elName.innerText = appt.name;
 
-            elAppt.appendChild(elName);
-            elAppt.appendChild(elTooltip);
-            elHourColumn.appendChild(elAppt);
+              elAppt.appendChild(elName);
+              elAppt.appendChild(elTooltip);
+              elHourColumn.appendChild(elAppt);
+            }
           }
         }
       })
@@ -221,6 +225,7 @@ const mountCalendarTable = () => {
       else if (appState.appointments.length > 0) {
         var selectedDay = new Date(appState.appointments[0].startDateTime);
         var firstApptTime = parseInt(selectedDay.toString().slice(16, 18));
+
         setTimeout(() => {
           elCalendarTable.scrollLeft = firstApptTime * 150;
         }, 500);
@@ -252,8 +257,8 @@ const mountCalendarTable = () => {
   
     elCalendarTableBody.appendChild(elTableHeaders);
   
-    const startWeek = moment().startOf('month').week();
-    const endWeek = moment().endOf('month').week();
+    const startWeek = moment(appState.date).startOf('month').week();
+    const endWeek = moment(appState.date).endOf('month').week();
   
     let calendar = []
     for(var week = startWeek; week<endWeek;week++){
@@ -269,12 +274,13 @@ const mountCalendarTable = () => {
         if (i !== 0 && i !== (calWeek.days.length - 1)) {
           var elCalDay = document.createElement('TD');
           elCalDay.innerText = calDay.format('D');
-  
-          if (calDay.format('YYYY-MM-DD') === moment(appState.date).format('YYYY-MM-DD')) {
+
+          if (calDay.format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
             elCalDay.className = 'today';
           }
           
-          var daysAppts = appState.appointments.filter(appt => appt.dateInternational === calDay.format('YYYY-MM-DD'))
+          //console.log(appState.appointments.map(a => moment(a.date).format('YYYY-MM-DD')), calDay.format('YYYY-MM-DD'))
+          var daysAppts = appState.appointments.filter(appt => moment(appt.date).format('YYYY-MM-DD') === calDay.format('YYYY-MM-DD'))
           daysAppts.map(dayAppt => {
             const services = appState.appointments.map(a => a.serviceId).filter(distinct);
             let bgColor = serviceColors[services.indexOf(dayAppt.serviceId)];

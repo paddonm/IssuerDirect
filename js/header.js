@@ -4,7 +4,7 @@ const navItems = [
   { label: 'Welcome back', button: 'Home', icon: 'fal fa-home', path: '', component: mountDashboardComponent },
   { label: 'Meetings', button: 'Meetings', icon: 'fal fa-users', path: 'meetings', component: mountMeetingAppointments },
   { label: 'Contacts', button: 'Contacts', icon: 'fal fa-address-card', path: 'contacts', component: mountContacts },
-  { label: 'Create Meeting', button: '', icon: 'fal fa-address-card', path: 'bookmeeting', component: mountBookingCalendar }
+  { label: 'Create Meeting', button: 'Book meeting', icon: 'fal fa-address-card', path: 'bookmeeting', component: mountBookingCalendar }
 ]
 
 var selectedNavItem = navItems[0].label;

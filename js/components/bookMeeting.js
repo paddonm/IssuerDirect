@@ -1,5 +1,128 @@
 var elAppDiv = document.getElementById('app');
 
+const mountContactsModal = () => {
+  var elContactsModal;
+
+  if (!document.getElementById('contacts-modal')) {
+    elContactsModal = document.createElement('DIV');
+    elContactsModal.id = 'contacts-modal';
+  }
+  else {
+    elContactsModal = document.getElementById('contacts-modal');
+  }
+
+  clearElement(elContactsModal);
+
+  elContactsModal.className = 'active';
+  
+  const mountCustomersModalList = () => {
+    var elContactsModalForm;
+    if (document.getElementById('contacts-modal-form')) {
+      elContactsModalForm = document.getElementById('contacts-modal-form');
+    }
+    elContactsModalForm = document.createElement('FORM');
+    elContactsModalForm.id = 'contacts-modal-form';
+    elContactsModalForm.onsubmit = e => {
+      e.preventDefault();
+      elContactsModal.className = '';
+
+      var newContacts = Array.from(e.target).filter(input => input.checked);
+      
+      updateSelectedContacts(newContacts);
+      document.getElementById('search-input').value = newContacts.map(contact => contact.dataset.name);
+    }
+
+    var elContactsModalList = document.createElement('TABLE');
+    elContactsModalList.className = 'contacts-modal-list';
+    
+    var elContactsModalListBody = document.createElement('TBODY');
+    
+    var elHeaderRow = document.createElement('TR');
+    var elHeaderCell1 = document.createElement('TH');
+    elHeaderCell1.innerText = 'Contact';
+    elHeaderCell1.setAttribute('colSpan', '2');
+    var elHeaderCell2 = document.createElement('TH');
+    elHeaderCell2.innerText = 'Select';
+    elHeaderRow.appendChild(elHeaderCell1);
+    elHeaderRow.appendChild(elHeaderCell2);
+    elContactsModalListBody.appendChild(elHeaderRow);
+    
+    appState.customers.map(customer => {
+      var elRow = document.createElement('TR');
+      
+      var elImgCell = document.createElement('TD');
+      var elIcon = document.createElement('DIV');
+      elIcon.className = 'initials-icon';
+      customer.name.split(' ').map((name, i) => { if (i <= 2) elIcon.innerText += name.slice(0,1) });
+      
+      elImgCell.appendChild(elIcon);
+      elRow.appendChild(elImgCell);
+
+      var elNameCell = document.createElement('TD');
+      elNameCell.innerText = customer.name;
+      
+      elRow.appendChild(elNameCell);
+
+      var elSelect = document.createElement('INPUT');
+      elSelect.setAttribute('type', 'checkbox');
+      elSelect.setAttribute('name', customer.id);
+      elSelect.dataset.id = customer.id;
+      elSelect.dataset.name = customer.name;
+      elSelect.dataset.email = customer.email;
+      
+      var elSelectCell = document.createElement('TD');
+      
+      elSelectCell.appendChild(elSelect);
+      
+      elRow.appendChild(elSelectCell);
+
+      elContactsModalListBody.appendChild(elRow);
+    })
+
+    elContactsModalList.appendChild(elContactsModalListBody);
+    elContactsModalForm.appendChild(elContactsModalList);
+
+    var elContactsModalHeader;
+
+    if (document.getElementById('contacts-modal-header')) {
+      elContactsModalHeader = document.getElementById('contacts-modal-header');
+    }
+    else {
+      var elContactsModalHeader = document.createElement('DIV');
+      elContactsModalHeader.className = 'contacts-modal-header';
+      elContactsModalHeader.id = 'contacts-modal-header';
+      elContactsModalHeader.innerHTML = `<div>Contacts <span>(${appState.customersTotal})</span></div>`
+      
+      elContactsModalClose = document.createElement('BUTTON');
+      elContactsModalClose.setAttribute('type', 'submit');
+      elContactsModalClose.className = 'contacts-close-btn';
+      elContactsModalClose.onclick = () => elContactsModal.className = '';
+      elContactsModalHeader.appendChild(elContactsModalClose);
+      
+      elContactsModalForm.prepend(elContactsModalHeader);
+    }
+
+    var elSubmitBtn = document.createElement('BUTTON');
+    elSubmitBtn.className = 'submit-btn';
+    elSubmitBtn.setAttribute('type', 'submit');
+    elSubmitBtn.innerText = 'Done';
+
+    elContactsModalForm.appendChild(elSubmitBtn);
+
+    elContactsModal.appendChild(elContactsModalForm);
+    elAppDiv.prepend(elContactsModal);
+  }
+
+  if (!document.getElementById('customer')) {
+    var elCustomer = document.createElement('DIV');
+    elCustomer.id = 'customer';
+  
+    elAppDiv.prepend(elCustomer);
+  }
+
+  mountCustomers(mountCustomersModalList, {}, {});
+}
+
 const mountSendButtons = () => {
   var elButtons = document.createElement('UL');
   elButtons.className = 'send-buttons';
@@ -154,6 +277,7 @@ const bookingContactSearch = () => {
   elSearchWrapper.className = 'search-wrapper';
   
   var elSearchBar = document.createElement('INPUT');
+  elSearchBar.id = 'search-input'
   
   var elSearchBtn = document.createElement('BUTTON');
   elSearchBtn.className = 'search-recipient-btn'
@@ -162,6 +286,7 @@ const bookingContactSearch = () => {
   var elViewContacts = document.createElement('BUTTON');
   elViewContacts.className = 'view-contacts-btn';
   elViewContacts.innerText = 'View Contacts';
+  elViewContacts.onclick = () => mountContactsModal();
 
   elSearchWrapper.appendChild(elSearchBar);
   elSearchWrapper.appendChild(elSearchBtn);

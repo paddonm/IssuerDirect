@@ -31,6 +31,12 @@ const updateDate = date => {
   })
 }
 
+const updateSelectedContacts = contacts => {
+  return new Promise(resolve => {
+    resolve(appState.contactsSelected = contacts)
+  })
+}
+
 const updateBusinessHours = businessHours => {
   return new Promise(resolve => {
     resolve(appState.businessHours = businessHours)
@@ -72,22 +78,24 @@ const updateCustomers = customers => {
 const setLoading = status => {
   var elAppDiv = document.getElementById('app');
   
-  var elLoader = document.createElement('IMG');
-  elLoader.id = 'loader-img';
-  elLoader.src = 'https://onsched.com/assets/img/logos/issuerdirectlogo2.gif';
+  var elLoading = document.createElement('DIV');
+  elLoading.id = 'loader-img'
+  elLoading.innerHTML = "<img src='https://onsched.com/assets/img/logos/issuerdirectlogo2.gif' />"
   
-  if (status && !document.getElementById('loader-img')) {
-    elAppDiv.appendChild(elLoader);
-    elAppDiv.className = 'loading';
-  }
-  
-  checkElements('#loader-img').then(resp => {
-    if (!status && resp.length) {
-      elAppDiv.removeChild(resp[0]);
-      elAppDiv.className = '';
+  if (status) {
+    if (!document.getElementById('loader-img')) {
+      elAppDiv.appendChild(elLoading);
+      elAppDiv.className = 'loading';
     }
-  })
-
+  }
+  else {
+    checkElements('#loader-img').then(resp => {
+      if (resp.length) {
+        elAppDiv.removeChild(resp[0]);
+        elAppDiv.className = '';
+      }
+    })
+  }
 }
 
 const generatePagination = () => {

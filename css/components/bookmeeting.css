@@ -50,6 +50,7 @@
   background-color: var(--onschedBlue);
   color: #fff;
   font-weight: 600;
+  cursor: pointer;
   border: none;
   border-radius: 15px;
 }
@@ -207,4 +208,80 @@
   font-weight: 600;
   border-radius: 15px !important;
   margin: 5px;
+}
+
+#contacts-modal.active {
+  position: fixed;
+  background: #fff;
+  height: calc(100% - 60px);
+  overflow-y: scroll;
+  width: 100%;
+  max-width: 1050px;
+  padding: 15px;
+  top: 15px;
+  border-radius: 14px;
+  box-shadow: 0px 0px 200px 340px #0000004a;
+  display: unset;
+}
+
+#contacts-modal {
+  display: none;
+}
+
+#contacts-modal .contacts-modal-list {
+  width: 100%;
+  text-align: left;
+  margin-top: 25px;
+  border-collapse: separate;
+}
+
+#contacts-modal .contacts-modal-list th {
+  font-size: 12px;
+  font-weight: 600;
+  color: #8c8c8c;
+}
+#contacts-modal .contacts-modal-list td {
+  border-top: 1px solid #dddddd;
+  font-weight: 500;
+  padding: 5px;
+}
+
+.contacts-modal-header {
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.contacts-modal-header span {
+  color: var(--onschedBlue);
+}
+
+.contacts-modal-header .contacts-close-btn {
+  width: 21px;
+  height: 21px;
+  border-radius: 25px;
+  border: 2px solid #363636;
+  cursor: pointer;
+}
+
+.contacts-modal-header .contacts-close-btn::after {
+  position: absolute;
+  content: 'x';
+  color: #363636;
+  margin: -9px 0 0 -4px;
+  font-weight: 600;
+}
+
+#contacts-modal .submit-btn {
+  background-color: #be5928;
+  padding: 5px 15px;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: .9rem;
+  margin: 15px 0px 0 0;
+  cursor: pointer;
+  text-align: center;
 }
